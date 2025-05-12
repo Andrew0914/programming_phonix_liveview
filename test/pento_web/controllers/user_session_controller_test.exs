@@ -15,14 +15,12 @@ defmodule PentoWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/guess"
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
-      response = html_response(conn, 200)
-      assert response =~ user.email
-      assert response =~ ~p"/users/settings"
-      assert response =~ ~p"/users/log_out"
+      response = html_response(conn, 302)
+      assert response =~ ~p"/guess"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
@@ -36,7 +34,7 @@ defmodule PentoWeb.UserSessionControllerTest do
         })
 
       assert conn.resp_cookies["_pento_web_user_remember_me"]
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/guess"
     end
 
     test "logs the user in with return to", %{conn: conn, user: user} do
@@ -65,7 +63,7 @@ defmodule PentoWeb.UserSessionControllerTest do
           }
         })
 
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/guess"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Account created successfully"
     end
 
