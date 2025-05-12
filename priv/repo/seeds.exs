@@ -1,3 +1,5 @@
+alias Pento.Catalog
+
 # Script for populating the database. You can run it as:
 #
 #     mix run priv/repo/seeds.exs
@@ -9,3 +11,26 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+products = [
+  %{
+    name: "Uno",
+    description: "UNO is a fun card game",
+    unit_price: 10.0,
+    sku: 123_456_789
+  },
+  %{
+    name: "Monopoly",
+    description: "Monopoly is a board game",
+    unit_price: 20.0,
+    sku: 987_654_321
+  },
+  %{
+    name: "Chess",
+    description: "Chess is a board game",
+    unit_price: 30.0,
+    sku: 1_234_556
+  }
+]
+
+Enum.each(products, fn product -> Catalog.create_product(product) end)
