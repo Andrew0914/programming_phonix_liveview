@@ -13,6 +13,7 @@ defmodule PentoWeb.ProductLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:message, "Getting product...")
      |> assign(:product, Catalog.get_product!(id))}
   end
 
