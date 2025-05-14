@@ -1,0 +1,14 @@
+<.header>
+  Send yout promo code to a friend.
+  <:subtitle>promo code fot 10% off their first game purchase!</:subtitle>
+</.header>
+
+<div>
+  <.simple_form for={@form} id="promo-form" phx-change="validate" phx-submit="save">
+    <.input type="text" field={@form[:first_name]} label="First Name" />
+    <.input type="email" field={@form[:email]} label="Email" phx-debounce="blur" />
+    <:actions>
+      <.button phx-disable-with="Sending...">Send promo</.button>
+    </:actions>
+  </.simple_form>
+</div>

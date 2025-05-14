@@ -1,4 +1,5 @@
 defmodule PentoWeb.Router do
+  alias Pento.Promo
   use PentoWeb, :router
 
   import PentoWeb.UserAuth
@@ -83,6 +84,9 @@ defmodule PentoWeb.Router do
 
       live "/questions/:id", QuestionLive.Show, :show
       live "/questions/:id/show/edit", QuestionLive.Show, :edit
+
+      # Promo
+      live "/promo", PromoLive
     end
   end
 
