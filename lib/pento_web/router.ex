@@ -1,5 +1,4 @@
 defmodule PentoWeb.Router do
-  alias Pento.Promo
   use PentoWeb, :router
 
   import PentoWeb.UserAuth

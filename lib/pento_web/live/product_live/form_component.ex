@@ -23,22 +23,40 @@ defmodule PentoWeb.ProductLive.FormComponent do
         <.input field={@form[:description]} type="text" label="Description" />
         <.input field={@form[:unit_price]} type="number" label="Unit price" step="any" />
         <.input field={@form[:sku]} type="number" label="Sku" />
+
+        <div phx-drop-target={@uploads.image.ref}>
+          <.label>Image</.label>
+          <.live_file_input upload={@uploads.image} />
+        </div>
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>
         </:actions>
       </.simple_form>
+
+      <%= for image <-@uploads.image.entries do %>
+        <div class="mt-4">
+          <.live_img_preview entry={image} width="60" />
+        </div>
+        <progress value={image.progress} max="100" />
+        <%= for error <- upload_errors(@uploads.image, image) do %>
+          <.error>{error}</.error>
+        <% end %>
+      <% end %>
     </div>
     """
   end
 
   @impl true
   def update(%{product: product} = assigns, socket) do
+    changeset = Catalog.change_product(product)
+
     {:ok,
      socket
      |> assign(assigns)
      |> assign_new(:form, fn ->
-       to_form(Catalog.change_product(product))
-     end)}
+       to_form(changeset)
+     end)
+     |> allow_image_upload()}
   end
 
   @impl true
@@ -82,4 +100,18 @@ defmodule PentoWeb.ProductLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp allow_image_upload(socket) do
+    new_socket =
+      socket
+      |> allow_upload(
+        :image,
+        accept: ~w(.jpg .jpeg .png),
+        max_entries: 1,
+        max_file_size: 9_000_000,
+        auto_upload: true
+      )
+
+    new_socket
+  end
 end
