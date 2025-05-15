@@ -76,4 +76,20 @@ defmodule Pento.Accounts.UserNotifier do
     ==============================
     """)
   end
+
+  def deliver_promotion(user, email, name) do
+    deliver(email, "Promo code", """
+
+    ==============================
+
+    Hi #{name},
+
+    Your friend #{user.username} has sent you a promo code:
+
+    13290121123
+
+    In order you to get a discount, please visit our website and use the code.
+    ==============================
+    """)
+  end
 end

@@ -107,4 +107,9 @@ defmodule Pento.Catalog do
     |> Product.change_unit_price(unit_price)
     |> Repo.update()
   end
+
+  def products_by_sku(sku) do
+    result = Repo.all(from p in Product, where: p.sku == ^sku)
+    {:ok, result}
+  end
 end

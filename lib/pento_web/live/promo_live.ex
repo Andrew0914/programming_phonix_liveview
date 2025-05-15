@@ -33,10 +33,9 @@ defmodule PentoWeb.PromoLive do
   @impl true
   def handle_event("save", %{"recipient" => params}, socket) do
     changeset = Promo.change_recipient(socket.assigns.recipient, params)
-    IO.inspect(socket.assigns.recipient)
 
     with true <- changeset.valid?,
-         {:ok, _} <- Promo.send_promo(socket.assigns.recipient, params) do
+         {:ok, _} <- Promo.send_promo(socket.assigns.current_user, params) do
       {:noreply, socket |> put_flash(:info, "Promo code was sent")}
     else
       _ -> {:noreply, socket |> put_flash(:error, "Failed to send promo code")}

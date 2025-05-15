@@ -20,6 +20,15 @@ defmodule Pento.Catalog.Product do
     validate_number(changeset, :unit_price, less_than: old_price)
   end
 
+  defp validate_sku(changeset) do
+    # validate exactly 6 digits in integer (100,000 to 999,999)
+    validate_number(changeset, :sku,
+      greater_than_or_equal_to: 100_000,
+      less_than: 1_000_000,
+      message: "SKU must be a 6-digit number"
+    )
+  end
+
   @doc false
   def changeset(product, attrs) do
     product
@@ -27,6 +36,7 @@ defmodule Pento.Catalog.Product do
     |> validate_required([:name, :description, :unit_price, :sku])
     |> validate_unit_price()
     |> unique_constraint(:sku)
+    |> validate_sku()
   end
 
   @doc false
