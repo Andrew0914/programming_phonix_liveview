@@ -1,5 +1,5 @@
 <.header>
-  {@message} Product {@product.id}
+  Product {@product.id}
   <:subtitle>This is a product record from your database.</:subtitle>
   <:actions>
     <.link patch={~p"/products/#{@product}/show/edit"} phx-click={JS.push_focus()}>
@@ -14,6 +14,10 @@
   <:item title="Unit price">{@product.unit_price}</:item>
   <:item title="Sku">{@product.sku}</:item>
 </.list>
+
+<div class="mt-8">
+  <img src={@product.image_upload} alt={@product.name} width="200" />
+</div>
 
 <.back navigate={~p"/products"}>Back to products</.back>
 

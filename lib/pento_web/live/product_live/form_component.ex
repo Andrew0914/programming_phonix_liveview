@@ -49,6 +49,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
   @impl true
   def update(%{product: product} = assigns, socket) do
     changeset = Catalog.change_product(product)
+    IO.inspect(to_form(changeset))
 
     {:ok,
      socket
@@ -69,7 +70,9 @@ defmodule PentoWeb.ProductLive.FormComponent do
     save_product(socket, socket.assigns.action, product_params)
   end
 
-  defp save_product(socket, :edit, product_params) do
+  defp save_product(socket, :edit, params) do
+    product_params = params_with_image(socket, params)
+
     case Catalog.update_product(socket.assigns.product, product_params) do
       {:ok, product} ->
         notify_parent({:saved, product})
@@ -84,7 +87,9 @@ defmodule PentoWeb.ProductLive.FormComponent do
     end
   end
 
-  defp save_product(socket, :new, product_params) do
+  defp save_product(socket, :new, params) do
+    product_params = params_with_image(socket, params)
+
     case Catalog.create_product(product_params) do
       {:ok, product} ->
         notify_parent({:saved, product})
@@ -113,5 +118,18 @@ defmodule PentoWeb.ProductLive.FormComponent do
       )
 
     new_socket
+  end
+
+  defp params_with_image(socket, params) do
+    uploaded_entries = socket |> consume_uploaded_entries(:image, &upload_static_file/2)
+    path = uploaded_entries |> List.first()
+    Map.put(params, "image_upload", path)
+  end
+
+  defp upload_static_file(%{path: path}, _entry) do
+    filename = Path.basename(path)
+    dest = Path.join("priv/static/images", filename)
+    File.cp!(path, dest)
+    {:ok, ~p"/images/#{filename}"}
   end
 end
