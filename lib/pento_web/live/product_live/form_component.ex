@@ -37,7 +37,18 @@ defmodule PentoWeb.ProductLive.FormComponent do
         <div class="mt-4">
           <.live_img_preview entry={image} width="60" />
         </div>
+
         <progress value={image.progress} max="100" />
+
+        <.button
+          phx-click="cancel_upload"
+          phx-value-ref={image.ref}
+          phx-target={@myself}
+          class="bg-red-500"
+        >
+          Cancel Upload
+        </.button>
+
         <%= for error <- upload_errors(@uploads.image, image) do %>
           <.error>{error}</.error>
         <% end %>
@@ -65,8 +76,14 @@ defmodule PentoWeb.ProductLive.FormComponent do
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
+  @impl true
   def handle_event("save", %{"product" => product_params}, socket) do
     save_product(socket, socket.assigns.action, product_params)
+  end
+
+  @impl true
+  def handle_event("cancel_upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :image, ref)}
   end
 
   defp save_product(socket, :edit, params) do
