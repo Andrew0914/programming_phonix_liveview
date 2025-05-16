@@ -1,0 +1,19 @@
+<section>
+  <Component.hero content="Survey">
+    Please fill put our survey.
+  </Component.hero>
+  <hr class="my-4" />
+  <%= if @demographic do %>
+    <Show.details demographic={@demographic} class="my-2" />
+  <% else %>
+    <h2>Demographic form comming soon!</h2>
+  <% end %>
+
+  <%= for message <- @messages do %>
+    <Show.title message={message}>
+      {message}
+    </Show.title>
+  <% end %>
+
+  <Show.custom_list items={@messages} class="my-8" />
+</section>

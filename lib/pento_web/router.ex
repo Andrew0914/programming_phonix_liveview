@@ -89,6 +89,9 @@ defmodule PentoWeb.Router do
 
       # Search
       live "/search", SearchLive.Index, :index
+
+      # Survey
+      live "/survey", SurveyLive, :index
     end
   end
 

@@ -460,6 +460,8 @@ defmodule PentoWeb.CoreComponents do
     default: &Function.identity/1,
     doc: "the function for mapping each row before calling the :col and :action slots"
 
+  attr :first_col_class, :string, default: "font-semibold text-zinc-900"
+
   slot :col, required: true do
     attr :label, :string
   end
@@ -496,7 +498,7 @@ defmodule PentoWeb.CoreComponents do
             >
               <div class="block py-4 pr-6">
                 <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
+                <span class={["relative", i == 0 && @first_col_class]}>
                   {render_slot(col, @row_item.(row))}
                 </span>
               </div>

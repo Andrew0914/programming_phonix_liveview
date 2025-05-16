@@ -200,6 +200,6 @@ defmodule Pento.Survey do
 
   def get_demographic_for_user(user) do
     Pento.Survey.Demographic.Query.for_user(user)
-    |> Repo.all()
+    |> Repo.one()
   end
 end
