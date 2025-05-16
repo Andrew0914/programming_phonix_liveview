@@ -17,19 +17,19 @@ products = [
     name: "Uno",
     description: "UNO is a fun card game",
     unit_price: 10.0,
-    sku: 123_456_789
+    sku: 123_456
   },
   %{
     name: "Monopoly",
     description: "Monopoly is a board game",
     unit_price: 20.0,
-    sku: 987_654_321
+    sku: 987_654
   },
   %{
     name: "Chess",
     description: "Chess is a board game",
     unit_price: 30.0,
-    sku: 1_234_556
+    sku: 176_542
   }
 ]
 

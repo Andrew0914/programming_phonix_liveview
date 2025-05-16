@@ -197,4 +197,9 @@ defmodule Pento.Survey do
   def change_rating(%Rating{} = rating, attrs \\ %{}) do
     Rating.changeset(rating, attrs)
   end
+
+  def get_demographic_for_user(user) do
+    Pento.Survey.Demographic.Query.for_user(user)
+    |> Repo.all()
+  end
 end
