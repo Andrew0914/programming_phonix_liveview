@@ -7,7 +7,12 @@ defmodule Pento.CatalogFixtures do
   @doc """
   Generate a unique product sku.
   """
-  def unique_product_sku, do: System.unique_integer([:positive])
+  def unique_product_sku do
+    # Get a unique positive integer (for uniqueness)
+    unique = System.unique_integer([:positive])
+    # Use modulo to keep it within 900,000 values and add 100,000 to ensure 6 digits
+    100_000 + rem(unique, 900_000)
+  end
 
   @doc """
   Generate a product.
@@ -19,7 +24,7 @@ defmodule Pento.CatalogFixtures do
         description: "some description",
         name: "some name",
         sku: unique_product_sku(),
-        unit_price: 120.5
+        unit_price: 20.5
       })
       |> Pento.Catalog.create_product()
 

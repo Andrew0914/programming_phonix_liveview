@@ -4,9 +4,9 @@ defmodule PentoWeb.QuestionLiveTest do
   import Phoenix.LiveViewTest
   import Pento.FaqFixtures
 
-  @create_attrs %{question: "some question", answer: "some answer", votes: 42}
-  @update_attrs %{question: "some updated question", answer: "some updated answer", votes: 43}
-  @invalid_attrs %{question: nil, answer: nil, votes: nil}
+  @create_attrs %{question: "some question", answer: "some answer"}
+  @update_attrs %{question: "some updated question", answer: "some updated answer"}
+  @invalid_attrs %{question: nil, answer: nil}
 
   defp create_question(_) do
     question = question_fixture()
@@ -14,7 +14,7 @@ defmodule PentoWeb.QuestionLiveTest do
   end
 
   describe "Index" do
-    setup [:create_question]
+    setup [:create_question, :register_and_log_in_user]
 
     test "lists all questions", %{conn: conn, question: question} do
       {:ok, _index_live, html} = live(conn, ~p"/questions")
@@ -78,7 +78,7 @@ defmodule PentoWeb.QuestionLiveTest do
   end
 
   describe "Show" do
-    setup [:create_question]
+    setup [:create_question, :register_and_log_in_user]
 
     test "displays question", %{conn: conn, question: question} do
       {:ok, _show_live, html} = live(conn, ~p"/questions/#{question}")
