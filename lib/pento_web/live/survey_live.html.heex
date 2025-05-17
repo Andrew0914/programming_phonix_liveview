@@ -6,14 +6,10 @@
   <%= if @demographic do %>
     <Show.details demographic={@demographic} class="my-2" />
   <% else %>
-    <h2>Demographic form comming soon!</h2>
+    <.live_component
+      module={PentoWeb.DemographicLive.Form}
+      id="demographic_form"
+      current_user={@current_user}
+    />
   <% end %>
-
-  <%= for message <- @messages do %>
-    <Show.title message={message}>
-      {message}
-    </Show.title>
-  <% end %>
-
-  <Show.custom_list items={@messages} class="my-8" />
 </section>
