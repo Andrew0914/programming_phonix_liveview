@@ -5,11 +5,12 @@ defmodule PentoWeb.RatingLive.Index do
 
   attr :products, :list, required: true
   attr :current_user, :any, required: true
+  attr :show_ratings, :boolean, default: false
 
   def product_list(assigns) do
     ~H"""
     <.heading products={@products} />
-    <div class="grid grid-cols-2 gap-4 divide-y">
+    <div class="grid grid-cols-2 gap-4 divide-y" id="rating_list">
       <.product_rating
         :for={{p, i} <- Enum.with_index(@products)}
         current_user={@current_user}

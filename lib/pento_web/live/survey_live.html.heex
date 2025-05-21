@@ -6,7 +6,18 @@
   <%= if @demographic do %>
     <Show.details demographic={@demographic} class="my-2" />
     <hr />
-    <RatingLive.Index.product_list products={@products} current_user={@current_user} />
+
+    <RatingLive.Index.product_list
+      products={@products}
+      current_user={@current_user}
+      show_ratings={!@ratin_is_collapse}
+    />
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      phx-click={toggle_ratings()}
+    >
+      Toggle Ratings
+    </button>
   <% else %>
     <.live_component
       module={PentoWeb.DemographicLive.Form}

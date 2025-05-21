@@ -12,6 +12,19 @@
       type="select"
       options={Enum.reverse(1920..2025)}
     />
+    <.input
+      field={@form[:education]}
+      label="Education"
+      type="select"
+      prompt="Select your education level"
+      options={[
+        "high school",
+        "bachelor's degree",
+        "graduate degree",
+        "other",
+        "prefer not to say"
+      ]}
+    />
     <:actions>
       <.button phx-disable-with="Saving...">Save</.button>
     </:actions>

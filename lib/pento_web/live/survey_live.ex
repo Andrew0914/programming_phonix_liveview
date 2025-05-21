@@ -6,10 +6,12 @@ defmodule PentoWeb.SurveyLive do
   alias PentoWeb.DemographicLive.Show
   alias PentoWeb.RatingLive
   alias Pento.Catalog
+  alias Phoenix.LiveView.JS
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket |> assign_demographic() |> assign_products()}
+    {:ok,
+     socket |> assign_demographic() |> assign_products() |> assign(:ratin_is_collapse, false)}
   end
 
   @impl true
@@ -20,6 +22,11 @@ defmodule PentoWeb.SurveyLive do
   @impl true
   def handle_info({:rating_product_created, product, product_index}, socket) do
     {:noreply, handle_rating_created(product, product_index, socket)}
+  end
+
+  @impl true
+  def handle_info({:collapse, is_collapse}, socket) do
+    {:noreply, socket |> assign(:ratin_is_collapse, is_collapse)}
   end
 
   defp assign_demographic(%{assigns: %{current_user: user}} = socket) do
@@ -45,5 +52,9 @@ defmodule PentoWeb.SurveyLive do
 
   defp list_products(user) do
     Catalog.list_products_with_user_ratings(user)
+  end
+
+  def toggle_ratings(js \\ %JS{}) do
+    js |> JS.toggle(to: "#rating_list")
   end
 end

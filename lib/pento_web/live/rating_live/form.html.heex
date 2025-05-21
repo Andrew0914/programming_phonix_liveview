@@ -1,7 +1,7 @@
 <div>
   <.simple_form
     for={@form}
-    phx-submit="save"
+    phx-change="save"
     phx-target={@myself}
     id={"product-rating-form-#{@id}"}
     content_class="grid grid-cols-2 gap-4"
@@ -14,8 +14,5 @@
       prompt="Rating"
       options={["⭐️⭐️⭐️⭐️⭐️": 5, "⭐️⭐️⭐️⭐️": 4, "⭐️⭐️⭐️": 3, "⭐️⭐️": 2, "⭐️": 1]}
     />
-    <:actions>
-      <.button phx-disable-with="Saving...">Save</.button>
-    </:actions>
   </.simple_form>
 </div>
