@@ -12,7 +12,7 @@ defmodule PentoWeb.DemographicLive.Show do
   def details(assigns) do
     ~H"""
     <div class={"font-medium text-2xl #{@class}"}>
-      <h2>Demographics {raw("&#x2713;")}</h2>
+      <h2>Demographics <CoreComponents.icon name="hero-check-circle-solid" class="h-5 w-5" /></h2>
 
       <CoreComponents.table
         id="demographic-table"

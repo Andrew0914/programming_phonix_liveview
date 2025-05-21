@@ -1,0 +1,21 @@
+<div>
+  <.simple_form
+    for={@form}
+    phx-submit="save"
+    phx-target={@myself}
+    id={"product-rating-form-#{@id}"}
+    content_class="grid grid-cols-2 gap-4"
+  >
+    <input type="hidden" name={@form[:user_id].name} value={@form[:user_id].value} />
+    <input type="hidden" name={@form[:product_id].name} value={@form[:product_id].value} />
+    <.input
+      type="select"
+      field={@form[:stars]}
+      prompt="Rating"
+      options={["⭐️⭐️⭐️⭐️⭐️": 5, "⭐️⭐️⭐️⭐️": 4, "⭐️⭐️⭐️": 3, "⭐️⭐️": 2, "⭐️": 1]}
+    />
+    <:actions>
+      <.button phx-disable-with="Saving...">Save</.button>
+    </:actions>
+  </.simple_form>
+</div>
