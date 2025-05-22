@@ -95,6 +95,16 @@ defmodule PentoWeb.Router do
     end
   end
 
+  scope "/admin", PentoWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :ensure_user_is_admin,
+      root_layout: {PentoWeb.Layouts, :root},
+      on_mount: [{PentoWeb.UserAuth, :ensure_user_is_admin}] do
+      live "/dashboard", Admin.DashboardLive, :index
+    end
+  end
+
   scope "/", PentoWeb do
     pipe_through [:browser]
 
