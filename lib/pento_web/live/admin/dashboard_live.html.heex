@@ -2,4 +2,10 @@
   <h1 class="text-3xl font-bold">Admin Dashboard</h1>
 </section>
 
-<.live_component id={@survey_results_component_id} module={PentoWeb.Live.Admin.SurveyResultsLive} />
+<section class="grid grid-cols-2 gap-4">
+  <.live_component
+    id={@survey_results_component_id}
+    module={PentoWeb.Live.Admin.SurveyResultsLive}
+  />
+  <.live_component id={@user_activity_component_id} module={PentoWeb.Live.Admin.UserActivityLive} />
+</section>

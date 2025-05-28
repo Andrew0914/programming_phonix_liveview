@@ -9,7 +9,7 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
   def update(assigns, socket) do
     {:ok,
      assign(socket, assigns)
-     |> assign_filter(%{"age_group_filter" => "all"})
+     |> assign_filter()
      |> assign_products_with_average_ratings()
      |> assign_data()
      |> assign_chart()
@@ -54,6 +54,14 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
 
   defp assign_filter(socket, %{"gender_filter" => gender_filter}) do
     socket |> assign(:filter, {:gender_filter, gender_filter})
+  end
+
+  defp assign_filter(%{assigns: %{filter: filter}} = socket) do
+    socket |> assign(:filter, filter)
+  end
+
+  defp assign_filter(socket) do
+    socket |> assign(:filter, {:age_group_filter, "all"})
   end
 
   @impl true
