@@ -44,8 +44,13 @@ defmodule PentoWeb.ConnCase do
   It stores an updated connection and a registered user in the
   test context.
   """
-  def register_and_log_in_user(%{conn: conn}) do
-    user = Pento.AccountsFixtures.user_fixture()
+  def register_and_log_in_user(%{conn: conn}, is_admin \\ false) do
+    user = Pento.AccountsFixtures.user_fixture(%{is_admin: is_admin})
+    %{conn: log_in_user(conn, user), user: user}
+  end
+
+  def register_and_log_in_user_as_admin(%{conn: conn}) do
+    user = Pento.AccountsFixtures.user_fixture(%{is_admin: true})
     %{conn: log_in_user(conn, user), user: user}
   end
 

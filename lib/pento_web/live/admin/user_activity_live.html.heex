@@ -1,14 +1,27 @@
 <section class="user-activity-component ml-8">
-  <h2>User Activity</h2>
-  <p>Active users currently viewing games</p>
+  <section class="flex gap-2 mt-2">
+    <!-- User visiting products -->
+    <div class="grow">
+      <h3>Active users viewing games 👀</h3>
 
-  <div :for={{product_name, users} <- @user_activity}>
-    <h3>{product_name}</h3>
+      <div :for={{product_name, users} <- @user_activity}>
+        <h3>{product_name}</h3>
 
-    <ul>
-      <li :for={user <- users}>
-        {user.email}
-      </li>
-    </ul>
-  </div>
+        <ul>
+          <li :for={user <- users}>
+            {user.email}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- User taking the survey -->
+    <div class="grow">
+      <h3>{length(@survey_users_email)} users are taking the survey 👤</h3>
+      <ul>
+        <li :for={user <- @survey_users_email}>
+          {user.email}
+        </li>
+      </ul>
+    </div>
+  </section>
 </section>

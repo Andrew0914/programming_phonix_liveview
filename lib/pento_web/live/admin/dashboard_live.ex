@@ -5,12 +5,15 @@ defmodule PentoWeb.Admin.DashboardLive do
   alias PentoWeb.Endpoint
   @survey_results_topic "survey_results"
   @user_activity_topic "user_activity"
+  @survey_users_topic "survey_users"
 
+  @impl true
   def mount(_params, _session, socket) do
     if connected?(socket) do
       # Subscribing to topics
       Endpoint.subscribe(@survey_results_topic)
       Endpoint.subscribe(@user_activity_topic)
+      Endpoint.subscribe(@survey_users_topic)
     end
 
     {:ok,

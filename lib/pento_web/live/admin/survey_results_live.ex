@@ -16,7 +16,7 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
      |> assign_chart_svg()}
   end
 
-  defp assign_products_with_average_ratings(%{assigns: %{filter: filter}} = socket) do
+  def assign_products_with_average_ratings(%{assigns: %{filter: filter}} = socket) do
     socket
     |> assign(
       :products_with_average_ratings,
@@ -24,13 +24,13 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
     )
   end
 
-  defp assign_data(
-         %{assigns: %{products_with_average_ratings: products_with_average_ratings}} = socket
-       ) do
+  def assign_data(
+        %{assigns: %{products_with_average_ratings: products_with_average_ratings}} = socket
+      ) do
     socket |> assign(:dataset, make_bar_chart_dataset(products_with_average_ratings))
   end
 
-  defp assign_chart(%{assigns: %{dataset: dataset}} = socket) do
+  def assign_chart(%{assigns: %{dataset: dataset}} = socket) do
     socket |> assign(:chart, make_bar_chart(dataset))
   end
 
@@ -48,19 +48,19 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
     )
   end
 
-  defp assign_filter(socket, %{"age_group_filter" => age_group_filter}) do
+  def assign_filter(socket, %{"age_group_filter" => age_group_filter}) do
     socket |> assign(:filter, {:age_group_filter, age_group_filter})
   end
 
-  defp assign_filter(socket, %{"gender_filter" => gender_filter}) do
+  def assign_filter(socket, %{"gender_filter" => gender_filter}) do
     socket |> assign(:filter, {:gender_filter, gender_filter})
   end
 
-  defp assign_filter(%{assigns: %{filter: filter}} = socket) do
+  def assign_filter(%{assigns: %{filter: filter}} = socket) do
     socket |> assign(:filter, filter)
   end
 
-  defp assign_filter(socket) do
+  def assign_filter(socket) do
     socket |> assign(:filter, {:age_group_filter, "all"})
   end
 
@@ -86,18 +86,14 @@ defmodule PentoWeb.Live.Admin.SurveyResultsLive do
      |> assign_chart_svg()}
   end
 
-  defp get_products_with_average_filter({:age_group_filter, filter}) do
-    IO.puts("💧")
-
+  def get_products_with_average_filter({:age_group_filter, filter}) do
     case Catalog.products_with_average_ratings(%{age_group_filter: filter}) do
       [] -> Catalog.products_with_zero_ratings()
       products -> products
     end
   end
 
-  defp get_products_with_average_filter({:gender_filter, filter}) do
-    IO.puts("🔥")
-
+  def get_products_with_average_filter({:gender_filter, filter}) do
     case Catalog.products_with_average_ratings(%{gender_filter: filter}) do
       [] -> Catalog.products_with_zero_ratings()
       products -> products

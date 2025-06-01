@@ -8,11 +8,14 @@ defmodule PentoWeb.SurveyLive do
   alias PentoWeb.RatingLive
   alias Pento.Catalog
   alias Phoenix.LiveView.JS
+  alias PentoWeb.Presence
 
   @survey_results_topic "survey_results"
 
   @impl true
   def mount(_params, _session, socket) do
+    maybe_track_survey_users(socket)
+
     {:ok,
      socket |> assign_demographic() |> assign_products() |> assign(:ratin_is_collapse, false)}
   end
@@ -61,5 +64,12 @@ defmodule PentoWeb.SurveyLive do
 
   def toggle_ratings(js \\ %JS{}) do
     js |> JS.toggle(to: "#rating_list")
+  end
+
+  def maybe_track_survey_users(socket) do
+    if(connected?(socket)) do
+      user = socket.assigns.current_user
+      Presence.track_survey_user(self(), user)
+    end
   end
 end
