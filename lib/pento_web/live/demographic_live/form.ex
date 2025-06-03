@@ -39,6 +39,9 @@ defmodule PentoWeb.DemographicLive.Form do
 
       {:error, changeset} ->
         assign_form(socket, changeset)
+
+      _ ->
+        socket
     end
   end
 end
